@@ -3,7 +3,7 @@ var multer = require('multer');
 var s3_upload = require('./upload.js')
 
 var app = express();
-const PORT = 8010;
+const PORT = 3000;
 
 app.listen(PORT, function () {
   console.log('Node.js server is running on port ' + PORT);
