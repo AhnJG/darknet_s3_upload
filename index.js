@@ -1,9 +1,14 @@
 var express = require('express');
 var multer = require('multer');
 var s3_upload = require('./upload.js')
+var db_query = require('./db_query.js')
+var app = express();
+var bodyParser = require('body-parser')
 require('date-utils')
 
-var app = express();
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}))
+
 const PORT = 3000;
 
 app.listen(PORT, function () {
@@ -31,8 +36,12 @@ app.post('/upload', upload.single('userfile'), function(req, res){
     var time = newDate.toFormat('YYYYMMDD');
     fileName = 'darknet/atv/'+ time + '/' + req.file.filename;
 
-    res.send('Uploaded! : '+ fileName); // object를 리턴함
+    res.send(fileName); // object를 리턴함
     console.log(fileName); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
     
     s3_upload(req.file.path, fileName);
   });
+
+app.post('/result', function(req, res){
+    db_query(req.body.file, res);
+});
