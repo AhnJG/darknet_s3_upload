@@ -1,9 +1,10 @@
 var express = require('express');
 var multer = require('multer');
 var s3_upload = require('./upload.js')
+require('date-utils')
 
 var app = express();
-const PORT = 8010;
+const PORT = 3000;
 
 app.listen(PORT, function () {
   console.log('Node.js server is running on port ' + PORT);
@@ -26,8 +27,12 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 app.post('/upload', upload.single('userfile'), function(req, res){
-    res.send('Uploaded! : '+req.file); // object를 리턴함
-    console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
+    var newDate = new Date();
+    var time = newDate.toFormat('YYYYMMDD');
+    fileName = 'darknet/atv/'+ time + '/' + req.file.filename;
+
+    res.send('Uploaded! : '+ fileName); // object를 리턴함
+    console.log(fileName); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
     
-    s3_upload(req.file.path, req.file.filename);
+    s3_upload(req.file.path, fileName);
   });
