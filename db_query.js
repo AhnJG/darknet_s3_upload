@@ -9,9 +9,6 @@ const darknet_query = (filename, res) => {
     var params = {
         TableName : "flxr",
         KeyConditionExpression: "filename = :filename",
-        // ExpressionAttributeNames:{
-        //     ":filename": "filename"
-        // },
         ExpressionAttributeValues: {
             ":filename": filename
         }
