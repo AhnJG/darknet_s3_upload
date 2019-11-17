@@ -10,10 +10,6 @@ const uploadFile = (filePath, fileName) => {
     // Read content from the file
     const fileContent = fs.readFileSync(filePath);
 
-    // var newDate = new Date();
-    // var time = newDate.toFormat('YYYYMMDD');
-    // fileName = 'darknet/atv/'+ time + '/' + fileName
-
     // Setting up S3 upload parameters
     const params = {
         Bucket: BUCKET_NAME,
