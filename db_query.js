@@ -25,7 +25,7 @@ const darknet_query = (filename, res) => {
                 result = item;
             });
         }
-        res.send('Result : ' + result);
+        res.json(result);
         console.log(result);
     });
 
